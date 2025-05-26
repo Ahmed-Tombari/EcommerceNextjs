@@ -1,7 +1,19 @@
-// app/components/ProductCategories.js
+"use client"
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function ProductCategories() {
+  const [rating, setRating] = useState(0); // 0 to 5
+
+  const handleStarClick = (index) => {
+    // Toggle if same star clicked again
+    if (rating === index + 1) {
+      setRating(0); // unselect
+    } else {
+      setRating(index + 1); // select this star
+    }
+  };
+
   return (
     <div className="self-stretch inline-flex flex-col justify-center items-center gap-20">
       {/* Product Categories Section */}
@@ -18,7 +30,7 @@ export default function ProductCategories() {
         <div className="self-stretch grid justify-center px-4 md:px-28 md:inline-flex md:justify-start items-center gap-6 md:flex-wrap content-center">
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <div key={i} className="w-44 h-56 bg-white rounded-lg inline-flex flex-col justify-start items-center gap-4">
-              <img className="self-stretch h-40 relative" src="https://placehold.co/180x154 " alt={`Category ${i}`} />
+              <img className="self-stretch h-40 relative" src="/images/products/1.png" alt={`Category ${i}`} />
               <div className="self-stretch text-center text-black text-xl font-bold font-sen leading-loose">
                 Category {i}
               </div>
@@ -50,12 +62,38 @@ export default function ProductCategories() {
               We really like the<br />product and the quality
             </div>
 
-            {/* Star Ratings */}
-            <div className="inline-flex justify-start items-center gap-1">
+            {/* Interactive Star Ratings */}
+            <div className="flex items-center gap-x-1">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="w-6 h-6 relative overflow-hidden">
-                  <div className="w-5 h-5 left-[2px] top-[2.5px] absolute outline outline-[1.5px] outline-offset-[-0.75px] outline-yellow-600"></div>
-                </div>
+                <button
+                  type="button"
+                  key={i}
+                  onClick={() => handleStarClick(i)}
+                  className="focus:outline-none"
+                >
+                  <svg
+                    className={`w-6 h-6 ${
+                      i < rating ? 'fill-gold' : 'fill-gray-300'
+                    }`}
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clipPath="url(#clip0_6170_53668)">
+                      <path d="M9.10326 2.31699C9.47008 1.57374 10.5299 1.57374 10.8967 2.31699L12.7063 5.98347C12.8519 6.27862 13.1335 6.48319 13.4592 6.53051L17.5054 7.11846C18.3256 7.23765 18.6531 8.24562 18.0596 8.82416L15.1318 11.6781C14.8961 11.9079 14.7885 12.2389 14.8442 12.5632L15.5353 16.5931C15.6754 17.41 14.818 18.033 14.0844 17.6473L10.4653 15.7446C10.174 15.5915 9.82598 15.5915 9.53466 15.7446L5.91562 17.6473C5.18199 18.033 4.32456 17.41 4.46467 16.5931L5.15585 12.5632C5.21148 12.2389 5.10393 11.9079 4.86825 11.6781L1.94038 8.82416C1.34687 8.24562 1.67438 7.23765 2.4946 7.11846L6.54081 6.53051C6.86652 6.48319 7.14808 6.27862 7.29374 5.98347L9.10326 2.31699Z" fill="" />
+                      <g clipPath="url(#clip1_6170_53668)">
+                        <path d="M9.10326 2.31699C9.47008 1.57374 10.5299 1.57374 10.8967 2.31699L12.7063 5.98347C12.8519 6.27862 13.1335 6.48319 13.4592 6.53051L17.5054 7.11846C18.3256 7.23765 18.6531 8.24562 18.0596 8.82416L15.1318 11.6781C14.8961 11.9079 14.7885 12.2389 14.8442 12.5632L15.5353 16.5931C15.6754 17.41 14.818 18.033 14.0844 17.6473L10.4653 15.7446C10.174 15.5915 9.82598 15.5915 9.53466 15.7446L5.91562 17.6473C5.18199 18.033 4.32456 17.41 4.46467 16.5931L5.15585 12.5632C5.21148 12.2389 5.10393 11.9079 4.86825 11.6781L1.94038 8.82416C1.34687 8.24562 1.67438 7.23765 2.4946 7.11846L6.54081 6.53051C6.86652 6.48319 7.14808 6.27862 7.29374 5.98347L9.10326 2.31699Z" fill="" />
+                      </g>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_6170_53668">
+                        <rect width="20" height="20" fill="white" />
+                      </clipPath>
+                      <clipPath id="clip1_6170_53668">
+                        <rect width="20" height="20" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </button>
               ))}
             </div>
 
@@ -67,7 +105,7 @@ export default function ProductCategories() {
           {/* Testimonial Image */}
           <img
             className="flex-1 h-80 min-w-48 relative rounded-lg"
-            src="https://placehold.co/600x310 "
+            src="/images/TestimonialCard.svg"
             alt="Customer testimonial"
           />
         </div>
